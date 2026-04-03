@@ -14,8 +14,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: auth0
     permissions:
       contents: read
+    env:
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
 
     steps:
       - name: Check out repository
@@ -32,9 +37,11 @@ jobs:
       - name: Verify exported Auth0 configuration exists
         run: test -f auth0/tenant.yaml
 
+      - name: Verify Auth0 secrets are available
+        run: |
+          test -n "$AUTH0_DOMAIN" || (echo "Missing GitHub secret: AUTH0_DOMAIN" && exit 1)
+          test -n "$AUTH0_CLIENT_ID" || (echo "Missing GitHub secret: AUTH0_CLIENT_ID" && exit 1)
+          test -n "$AUTH0_CLIENT_SECRET" || (echo "Missing GitHub secret: AUTH0_CLIENT_SECRET" && exit 1)
+
       - name: Deploy actions and trigger bindings to Auth0
         run: npm run auth0:deploy
-        env:
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
