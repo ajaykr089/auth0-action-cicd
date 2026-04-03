@@ -6,7 +6,7 @@
 */
 
 /**
- * Deplying cicd only
+ * Deplying from github only
  */
 exports.onExecutePostLogin = async (event, api) => {
   if (event.connection.strategy !== "auth0") return;

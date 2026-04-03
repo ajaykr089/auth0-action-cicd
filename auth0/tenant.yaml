@@ -1,4 +1,14 @@
 actions:
+  - name: 'Check user existence '
+    code: ./actions/Check user existence-/code.js
+    dependencies: []
+    deployed: false
+    runtime: node22
+    secrets: []
+    status: built
+    supported_triggers:
+      - id: post-user-registration
+        version: v2
   - name: Force password change
     code: ./actions/Force password change/code.js
     dependencies: []
@@ -9,6 +19,26 @@ actions:
     supported_triggers:
       - id: post-login
         version: v3
+  - name: 'Verify User Existence '
+    code: ./actions/Verify User Existence-/code.js
+    dependencies: []
+    deployed: true
+    runtime: node22
+    secrets: []
+    status: built
+    supported_triggers:
+      - id: pre-user-registration
+        version: v2
+  - name: Welcome Email
+    code: ./actions/Welcome Email/code.js
+    dependencies: []
+    deployed: true
+    runtime: node22
+    secrets: []
+    status: built
+    supported_triggers:
+      - id: post-user-registration
+        version: v2
 triggers:
   post-login:
     - action_name: Force password change
