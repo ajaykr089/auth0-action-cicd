@@ -1,0 +1,21 @@
+{
+  "name": "auth0-action-cicd",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Starter CI/CD setup for Auth0 Actions",
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "scripts": {
+    "auth0:export": "a0deploy export --config_file ./config/auth0.json --format yaml --output_folder ./auth0",
+    "auth0:export:local": "dotenv -e .env.local -- a0deploy export --config_file ./config/auth0.json --format yaml --output_folder ./auth0",
+    "auth0:deploy": "a0deploy import --config_file ./config/auth0.json --input_file ./auth0/tenant.yaml",
+    "auth0:deploy:local": "dotenv -e .env.local -- a0deploy import --config_file ./config/auth0.json --input_file ./auth0/tenant.yaml",
+    "auth0:deploy:debug": "a0deploy import --config_file ./config/auth0.json --input_file ./auth0/tenant.yaml --debug",
+    "auth0:deploy:debug:local": "dotenv -e .env.local -- a0deploy import --config_file ./config/auth0.json --input_file ./auth0/tenant.yaml --debug"
+  },
+  "devDependencies": {
+    "auth0-deploy-cli": "^8.21.0",
+    "dotenv-cli": "^7.4.4"
+  }
+}

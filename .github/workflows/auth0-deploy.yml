@@ -1,0 +1,40 @@
+name: Deploy Auth0 Actions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "auth0/**"
+      - "config/**"
+      - "package.json"
+      - ".github/workflows/auth0-deploy.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --no-fund --no-audit
+
+      - name: Verify exported Auth0 configuration exists
+        run: test -f auth0/tenant.yaml
+
+      - name: Deploy actions and trigger bindings to Auth0
+        run: npm run auth0:deploy
+        env:
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}

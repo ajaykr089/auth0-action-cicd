@@ -1,0 +1,23 @@
+image: node:20
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Deploy Auth0 Actions
+          caches:
+            - node
+          script:
+            - npm install --no-fund --no-audit
+            - test -f auth0/tenant.yaml
+            - npm run auth0:deploy
+  custom:
+    deploy-auth0:
+      - step:
+          name: Deploy Auth0 Actions
+          caches:
+            - node
+          script:
+            - npm install --no-fund --no-audit
+            - test -f auth0/tenant.yaml
+            - npm run auth0:deploy

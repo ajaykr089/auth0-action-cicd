@@ -1,0 +1,15 @@
+actions:
+  - name: Force password change
+    code: ./actions/Force password change/code.js
+    dependencies: []
+    deployed: true
+    runtime: node22
+    secrets: []
+    status: built
+    supported_triggers:
+      - id: post-login
+        version: v3
+triggers:
+  post-login:
+    - action_name: Force password change
+      display_name: Force password change
