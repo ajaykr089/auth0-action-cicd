@@ -43,3 +43,9 @@ triggers:
   post-login:
     - action_name: Force password change
       display_name: Force password change
+  post-user-registration:
+    - action_name: Welcome Email
+      display_name: Welcome Email
+  pre-user-registration:
+    - action_name: 'Verify User Existence '
+      display_name: 'Verify User Existence '
